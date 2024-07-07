@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>  
+    
+    <head>      
+        <title>Taiyi web</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+            
+        <style>
+            body {
+                background-color: #083149;
+                font-family: "futura-pt", sans-serif;
+                font-size: 16px;
+                line-height: 1.5;
+                margin: 0;
+                padding: 0;
+                
+            }
+            h1 {
+                color: rgb(16, 250, 230);
+                margin-left: 20px;
+                text-align: center;
+                font-size: 50px;
+                font-family: "futura-pt", sans-serif;
+            }
+            h2 {
+                color: rgb(211, 211, 224);
+                margin-left: 20px;
+                text-align: center;
+                font-size: 30px;
+                font-family: "futura-pt", sans-serif;
+                
+            }
+			h3{
+				color: rgb(211, 211, 224);
+                margin-left: 10px;
+				font-size: 20px;
+                font-family: "futura-pt", sans-serif;
+
+			}
+            p {
+                color: rgb(255, 255, 255);
+                margin-left: 20px;
+                text-align: center;
+                font-size: 20px;
+                font-family: "futura-pt", sans-serif;
+            }
+            li {
+                list-style-type: none;
+                margin-left: 20px;
+                text-align: center;
+                font-size: 20px;
+                font-family: "futura-pt", sans-serif;
+            }
+            a {
+                color: rgb(255, 255, 255);
+                text-decoration: none;
+                font-family: "futura-pt", sans-serif;
+            }
+            a:hover {
+                color: rgb(255, 255, 255);
+                text-decoration: underline;
+                font-family: "futura-pt", sans-serif;
+            }
+			
+            
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to Taiyi web</h1>
+        <h2>我只是程式小白 正在學習中ing...</h2>
+        <p>歡迎來到我的網站 我是三弦,這是我的第一個網頁 我分享程式設計的心得</p>
+        <hr>
+        <li><a href="#home">首頁</a></li>
+        <li><a href="#self">自我介紹</a></li>
+        <li><a href="#contact">聯絡我們</a></li>
+        <hr>
+		<h3>高一開始接觸程式設計這個領域，對還是小白的我來說，根本是跳脫一個層次，一開始學程式時，我只是照著課本打出第一個程式，Hello world！</h3>
+		<h3>我還不知道它的運行方式是甚麼，經過了二學期的磨練，我竟然開始教別人認識程式以及學習進階的語法，</h3>
+		<h3>我也會認識到自己觀看題目方面的能力不足，因此我會主動去找一些題目來學習，並且會主動去分享自己的程式設計心得，</h3>
+		<h3>設計這個網頁也是為了自己能往更好的方向發展，希望能藉由分享自己的程式設計心得，讓更多的人能夠學習到程式設計的技巧，並且能夠藉由自己的努力，成為更好的工程師。</h3>
+		<hr>
+        <script>
+			var RES_X = 20;
+			var RES_Y = 20;
+			var SIZE = 22;
+
+			// super laggy on mobile devices so ease up the res
+			if( /iphone|ipad|android/ig.test( navigator.userAgent ) ) {
+				RES_X = 16;
+				RES_Y = 16;
+				SIZE = 25;
+			}
+
+			var entities = [];
+
+			var wrapper = document.createElement( 'div' );
+			wrapper.className = 'wrapper';
+			wrapper.style.width = ( RES_X * SIZE ) + 'px';
+			wrapper.style.height = ( RES_Y * SIZE ) + 'px';
+			document.body.appendChild( wrapper );
+
+			for( var x = 0; x < RES_X; x++ ) {
+				for( var y = 0; y < RES_Y; y++ ) {
+					var el = document.createElement( 'input' );
+					el.setAttribute( 'type', 'checkbox' );
+					wrapper.appendChild( el );
+
+					var entity = {
+						element: el,
+						x: x * SIZE,
+						y: y * SIZE
+					}
+
+					el.style.left = entity.x + 'px';
+					el.style.top = entity.y + 'px';
+					el.addEventListener( 'change', this.toggle.bind( this, entity ) );
+
+					entities.push( entity );
+				}
+			}
+
+			function toggle( targetEntity ) {
+
+				var checked = targetEntity.element.checked;
+
+				entities.forEach( function( entity ) {
+
+					var dx = targetEntity.x - entity.x;
+					var dy = targetEntity.y - entity.y;
+					var distance = Math.sqrt( dx * dx + dy * dy );
+
+					setTimeout( function() {
+						entity.element.checked = checked;
+
+						// re-run the animation, reading offsetWidth forces reflow
+						entity.element.className = '';
+						entity.element.offsetWidth;
+						entity.element.className = 'grow';
+					}, Math.round( distance * 1.8 ) );
+
+				} );
+
+			}
+
+			setTimeout( function() {
+				entities[ 0 ].element.checked = true;
+				toggle( entities[ 0 ] );
+			}, 500 );
+		</script>
+
+		<!-- Third party scripts and sharing UI -->
+
+		<div class="credits">
+			<a href="https://github.com/ban38">MY GitHub</a>
+			<a href="https://www.instagram.com/11_taiyi/?hl=zh-tw">Follow IG @11.taiyi</a>
+			
+		</div>
+
+		<style type="text/css" media="screen">
+			.credits {
+				position: absolute;
+				right: 20px;
+				bottom: 25px;
+				font-size: 15px;
+				color: #fff;
+			}
+
+			.credits>* {
+				vertical-align: middle;
+				margin-left: 15px;
+			}
+
+			.credits a {
+				padding: 8px 10px;
+				color: #333;
+				border: 2px solid #aaa;
+				border-radius: 2px;
+				text-decoration: none;
+			}
+
+			.credits a:hover {
+				border-color: #666;
+				color: #000;
+			}
+		</style>
+
+		<script>
+			var _gaq = [['_setAccount', 'UA-15240703-1'], ['_trackPageview']];
+			(function(d, t) {
+			var g = d.createElement(t),
+			    s = d.getElementsByTagName(t)[0];
+			g.async = true;
+			g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			s.parentNode.insertBefore(g, s);
+			})(document, 'script');
+		</script>
+		<hr>
+        
+        
+    </body>
+</html>
