@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Taiyi web</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="三弦的程式設計心得分享網站。">
+    <meta name="keywords" content="程式設計, 心得, 教學, 三弦, 網頁設計">
+    <style>
+        body {
+            background-color: #083149;
+            font-family: "futura-pt", sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3, p, li, a {
+            font-family: "futura-pt", sans-serif;
+        }
+        h1 {
+            color: rgb(16, 250, 230);
+            margin-left: 20px;
+            text-align: center;
+            font-size: 50px;
+        }
+        h2 {
+            color: rgb(211, 211, 224);
+            margin-left: 20px;
+            text-align: center;
+            font-size: 30px;
+        }
+        h3 {
+            color: rgb(211, 211, 224);
+            margin-left: 10px;
+            font-size: 20px;
+        }
+        p, li {
+            color: rgb(255, 255, 255);
+            margin-left: 20px;
+            text-align: center;
+            font-size: 20px;
+        }
+        li {
+            list-style-type: none;
+        }
+        a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .wrapper {
+            position: relative;
+            margin: 0 auto;
+        }
+        .credits {
+            position: absolute;
+            right: 20px;
+            bottom: 25px;
+            font-size: 15px;
+            color: #fff;
+        }
+        .credits>* {
+            vertical-align: middle;
+            margin-left: 15px;
+        }
+        .credits a {
+            padding: 8px 10px;
+            color: #333;
+            border: 2px solid #aaa;
+            border-radius: 2px;
+            text-decoration: none;
+        }
+        .credits a:hover {
+            border-color: #06ffea;
+            color: #e26c0ace;
+        }
+        .grow {
+            transition: transform 0.5s ease;
+        }
+        .grow:checked {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to my web</h1>
+    <h2>我只是程式小白 正在學習中ing...</h2>
+    <p>歡迎來到我的網站 我是三弦,這是我的第一個網頁 我分享程式設計的心得</p>
+    <hr>
+    
+    <li><a href="home.html">首頁</a> || <a href="self.html">自介</a>  ||  <a href="C++.html">C++解題</a> || <a href="skills.html">技能</a> || <a href="works.html">作品集</a> || <a href="contact.html">聯絡</a></li>
+    
+    
+    <hr>
+
+    <div class="wrapper" id="gridWrapper"></div>
+
+	<div class="credits">
+        <a href="https://github.com/ban38">MY GitHub</a>
+        <a href="https://www.instagram.com/11_taiyi/?hl=zh-tw">Follow IG @11.taiyi</a>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var RES_X = 17;
+            var RES_Y = 18;
+            var SIZE = 22;
+
+            if (/iphone|ipad|android/ig.test(navigator.userAgent)) {
+                RES_X = 16;
+                RES_Y = 16;
+                SIZE = 25;
+            }
+
+            var entities = [];
+            var wrapper = document.getElementById('gridWrapper');
+            wrapper.style.width = (RES_X * SIZE) + 'px';
+            wrapper.style.height = (RES_Y * SIZE) + 'px';
+
+            for (var x = 0; x < RES_X; x++) {
+                for (var y = 0; y < RES_Y; y++) {
+                    var el = document.createElement('input');
+                    el.setAttribute('type', 'checkbox');
+                    el.classList.add('grow');
+                    el.style.left = (x * SIZE) + 'px';
+                    el.style.top = (y * SIZE) + 'px';
+                    wrapper.appendChild(el);
+
+                    var entity = {
+                        element: el,
+                        x: x * SIZE,
+                        y: y * SIZE
+                    };
+
+                    el.addEventListener('change', function (e) {
+                        toggle(entity);
+                    }.bind(this, entity));
+
+                    entities.push(entity);
+                }
+            }
+
+            function toggle(targetEntity) {
+                var checked = targetEntity.element.checked;
+
+                entities.forEach(function (entity) {
+                    var dx = targetEntity.x - entity.x;
+                    var dy = targetEntity.y - entity.y;
+                    var distance = Math.sqrt(dx * dx + dy * dy);
+
+                    setTimeout(function () {
+                        entity.element.checked = checked;
+                        entity.element.classList.remove('grow');
+                        entity.element.offsetWidth; // Force reflow
+                        entity.element.classList.add('grow');
+                    }, Math.round(distance * 1.8));
+                });
+            }
+
+            setTimeout(function () {
+                entities[0].element.checked = true;
+                toggle(entities[0]);
+            }, 500);
+        });
+    </script>
+
+    <script>
+        var _gaq = [['_setAccount', 'UA-15240703-1'], ['_trackPageview']];
+        (function (d, t) {
+            var g = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            g.async = true;
+            g.src = (('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js');
+            s.parentNode.insertBefore(g, s);
+        })(document, 'script');
+    </script>
+	
+</body>
+
+</html>
